@@ -59,8 +59,8 @@ const links = ref([
     icon: "bi bi-bag-check-fill",
   },
   {
-    name: "Services",
-    to: "/services",
+    name: "Orders",
+    to: "/orders",
     icon: "bi bi-basket",
   },
   {

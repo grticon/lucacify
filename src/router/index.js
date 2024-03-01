@@ -4,6 +4,7 @@ import DashboardLayout from "@/views/Dashboard/index.vue";
 import Dashboard from "@/views/Dashboard/Users.vue";
 import Agents from "@/views/Dashboard/Agents.vue";
 import ShopOrders from "@/views/Dashboard/ShopOrders.vue";
+import Orders from "@/views/Dashboard/Orders.vue";
 import Withdrawals from "@/views/Dashboard/Withdrawals.vue"
 import Reports from "@/views/Dashboard/Reports.vue"
 
@@ -33,6 +34,11 @@ const router = createRouter({
           path: "/shoporders",
           name: "shoporders",
           component: ShopOrders,
+        },
+        {
+          path: "/orders",
+          name: "orders",
+          component: Orders,
         },
         {
           path: "/withdrawals",
