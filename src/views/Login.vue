@@ -9,6 +9,7 @@ const password = ref('');
 <template>
   <main>
     <div class="form">
+      <img src="@/assets/logo2.png" alt="" width="200px">
       <form action="">
         <div class="full">
           <label for="email">Email</label>
@@ -30,13 +31,21 @@ const password = ref('');
 
 <style scoped lang="scss">
 main {
-
-  div.form {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 95vh;
+    height: 100vh;
+
+  div.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img{
+      margin: 0px 0px 30px;
+    }
 
     form {
       display: grid;
@@ -55,9 +64,12 @@ main {
         }
 
         input {
-          height: 44px;
+          height: 50px;
           width: 100%;
           border-radius: 5px;
+          border: 1px solid #999;
+          outline: none;
+          padding: 0px 15px;
         }
         button {
         height: 56px;

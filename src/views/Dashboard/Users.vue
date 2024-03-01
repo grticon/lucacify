@@ -2,7 +2,7 @@
   <main>
     <h1>Users - {{ Users.length }}</h1>
     <div class="table">
-      <table>
+      <table id="myTable" class="display">
         <thead>
           <tr>
             <td>Name</td>
@@ -41,34 +41,139 @@ const Users = ref([
     email: 'user@email.com',
     phone: '0123456789',
   },
-])
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username2',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+  {
+    name: 'username3',
+    email: 'user@email.com',
+    phone: '0123456789',
+  },
+]);
+
+$(document).ready(function () {
+      $('#myTable').DataTable();
+    });
 </script>
 
 <style scoped lang="scss">
 main{
   padding: 30px;
   height: 100vh;
+  @media(max-width: 710px){
+    padding: 30px 20px;
+  }
   h1{
     font-size: 20px;
   }
   div.table{
     margin: 20px 0;
-    table{
-      border-collapse: collapse;
-      border: 1px solid #ccc;
-      width: 100%;
-      max-width: 800px;
-      gap: 10px;
-      color: #555;
-      thead{
-        background-color: #fafaff;
+      @media(max-width: 710px){
+        overflow-x: scroll;
       }
-      td{
-        padding: 5px;
-        border-right: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-      }
-    }
+    // table{
+    //   border-collapse: collapse;
+    //   border: 1px solid #ccc;
+    //   width: 100%;
+    //   max-width: 800px;
+    //   min-width: fit-content;
+    //   gap: 10px;
+    //   color: #555;
+    //   thead{
+    //     background-color: #fafaff;
+    //   }
+    //   td{
+    //     padding: 5px;
+    //     border-right: 1px solid #ccc;
+    //     border-bottom: 1px solid #ccc;
+    //     font-size: 14px;
+    //     @media(max-width: 710px){
+    //       padding: 10px 5px;
+    //     }
+    //   }
+    // }
   }
 }
 </style>
