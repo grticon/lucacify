@@ -1,28 +1,68 @@
-<script setup>
-import { ref } from 'vue'
+<script>
+import { ref } from "vue";
 import { RouterLink, RouterView, useRouter } from "vue-router";
+import axios from "axios";
+import { API_URL } from "../config/config.js";
 
-const email = ref('');
-const password = ref('');
+export default {
+  data() {
+    return {
+      emailOrUsername: "",
+      password: "",
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await axios.post(
+          `${API_URL}/auth/login-admin`,
+          {
+            emailOrUsername: this.emailOrUsername,
+            password: this.password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        localStorage.setItem("token", response.data.data.token);
+        // redirect to dashboard
+        this.$router.push("/dashboard");
+      } catch (error) {
+        // Handle login error
+        if (error.response && error.response.status !== 200) {
+          const message = error.response.data.message || "An error occurred.";
+          alert(message);
+        } else {
+          console.error("Login failed:", error);
+        }
+      }
+    },
+  },
+};
 </script>
 
 <template>
   <main>
     <div class="form">
-      <img src="@/assets/logo2.png" alt="" width="200px">
-      <form action="">
+      <img src="@/assets/logo2.png" alt="" width="200px" />
+      <form @submit.prevent="login">
         <div class="full">
-          <label for="email">Email</label>
-          <input type="email" name="" id="email" v-model="email">
+          <label for="emailOrUsername">Email or Username</label>
+          <input
+            type="emailOrUsername"
+            name=""
+            id="emailOrUsername"
+            v-model="emailOrUsername"
+          />
         </div>
         <div class="full">
           <label for="password">Password</label>
-          <input type="password" name="" id="password" v-model="password">
+          <input type="password" name="" id="password" v-model="password" />
         </div>
         <div class="full">
-          <router-link to="/dashboard">
-            <button>Login</button>
-          </router-link>
+          <button type="submit">Login</button>
         </div>
       </form>
     </div>
@@ -31,11 +71,11 @@ const password = ref('');
 
 <style scoped lang="scss">
 main {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 
   div.form {
     width: 100%;
@@ -43,7 +83,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    img{
+    img {
       margin: 0px 0px 30px;
     }
 
@@ -72,15 +112,15 @@ main {
           padding: 0px 15px;
         }
         button {
-        height: 56px;
-        width: 100%;
-        border-radius: 5px;
-        border: none;
-        background-color: #3f3fc0;
-        color: #FFF;
-        font-size: 14px;
-        letter-spacing: 2px;
-      }
+          height: 56px;
+          width: 100%;
+          border-radius: 5px;
+          border: none;
+          background-color: #3f3fc0;
+          color: #fff;
+          font-size: 14px;
+          letter-spacing: 2px;
+        }
       }
     }
   }

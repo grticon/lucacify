@@ -1,18 +1,20 @@
 <template>
   <main>
-    <h1>Users - {{ Users.length }}</h1>
+    <h1>Users - {{ users.length }}</h1>
     <div class="table">
       <table id="myTable" class="display">
         <thead>
           <tr>
             <td>Name</td>
+            <td>Username</td>
             <td>Email</td>
             <td>Phone</td>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in Users" :key="index">
+          <tr v-for="(user, index) in users" :key="index">
             <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.phone }}</td>
           </tr>
@@ -22,137 +24,71 @@
   </main>
 </template>
 
-<script setup>
+<script>
 import { ref } from "vue";
+import axios from "axios";
+import { API_URL } from "../../config/config.js";
+import $ from "jquery";
 
-const Users = ref([
-  {
-    name: 'username1',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username2',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-  {
-    name: 'username3',
-    email: 'user@email.com',
-    phone: '0123456789',
-  },
-]);
 
-$(document).ready(function () {
-      $('#myTable').DataTable();
-    });
+export default {
+  data() {
+    return {
+      users: [],
+    };
+  },
+  mounted() {
+    // Fetch users when the component is created
+    this.fetchUsers();
+  },
+  methods: {
+    async fetchUsers() {
+      try {
+        // Check if token exists
+        if (!localStorage.getItem("token")) {
+          this.$router.push("/");
+          return;
+        }
+        const response = await axios.get(`${API_URL}/user/get-users-list`, {
+          headers: {
+            token: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        // format users to return only name, email and phone number
+        this.users = response.data.data.users.map((user) => {
+          return {
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+          };
+        });
+        this.$nextTick(() => {
+          $("#myTable").DataTable();
+        });
+      } catch (error) {
+        console.error("Fetch users failed:", error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-main{
+main {
   padding: 30px;
   height: 100vh;
-  @media(max-width: 710px){
+  @media (max-width: 710px) {
     padding: 30px 20px;
   }
-  h1{
+  h1 {
     font-size: 20px;
   }
-  div.table{
+  div.table {
     margin: 20px 0;
-      @media(max-width: 710px){
-        overflow-x: scroll;
-      }
+    @media (max-width: 710px) {
+      overflow-x: scroll;
+    }
     // table{
     //   border-collapse: collapse;
     //   border: 1px solid #ccc;
