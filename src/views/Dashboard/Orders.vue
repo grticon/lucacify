@@ -52,17 +52,13 @@
     <div class="modal" v-if="showOrder">
       <div class="container">
         <i class="bi bi-x-lg" @click="hideOrderModal()"></i>
-        <div
-          class="form"
-        >
+        <div class="form">
           <h3>Order Summary</h3>
           <p class="txt">
             Service ordered -
             {{ selectedOrder.package.service.serviceType.name }}
           </p>
-          <p class="txt">
-            Package - {{ selectedOrder.package.name }}
-          </p>
+          <p class="txt">Package - {{ selectedOrder.package.name }}</p>
           <p class="txt">Price - N{{ selectedOrder.fee }}</p>
           <p class="txt ct">
             Is Completed -
@@ -141,12 +137,10 @@ export default {
   },
   methods: {
     hideOrderModal() {
-      console.log("Closed modal");
       this.showOrder = false; // Hide the modal
       this.selectedOrder = {}; // Reset the selected order data
     },
     showOrderModal(order) {
-      console.log("Opened modal");
       this.selectedOrder = order; // Set the selected order data
       this.showOrder = true; // Show the modal
     },

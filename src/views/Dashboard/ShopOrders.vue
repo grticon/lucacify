@@ -93,12 +93,10 @@ export default {
   },
   methods: {
     hideOrderModal() {
-      console.log("Closed modal");
       this.showOrder = false; // Hide the modal
       this.selectedOrder = {}; // Reset the selected order data
     },
     showOrderModal(order) {
-      console.log("Opened modal");
       this.selectedOrder = order; // Set the selected order data
       this.showOrder = true; // Show the modal
     },

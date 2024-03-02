@@ -25,7 +25,13 @@
                 <span class="status" v-if="agent.isVerified">
                   <i class="bi bi-patch-check-fill"></i> Verified
                 </span>
-                <button v-else @click.stop="verifyAgent(agent)" class="btn btn-primary">Verify</button>
+                <button
+                  v-else
+                  @click.stop="verifyAgent(agent)"
+                  class="btn btn-primary"
+                >
+                  Verify
+                </button>
               </td>
             </tr>
           </tbody>
@@ -56,9 +62,7 @@
             <p class="stat" v-if="agent.isVerified">
               Verified <i class="bi bi-patch-check-fill"></i>
             </p>
-            <button v-else @click="verifyAgent(agent)">
-              Verify
-            </button>
+            <button v-else @click="verifyAgent(agent)">Verify</button>
           </div>
         </div>
       </div>
@@ -72,7 +76,6 @@ import { API_URL } from "../../config/config.js";
 import $ from "jquery";
 import { ref } from "vue";
 import Loader from "@/components/Loader.vue";
-
 
 export default {
   data() {
@@ -89,7 +92,6 @@ export default {
   },
   methods: {
     hideAgentModal() {
-      console.log("Closed modal");
       if (this.showAgent) {
         setTimeout(() => {
           this.showAgent = false; // Hide the modal after a delay
@@ -98,53 +100,34 @@ export default {
       }
     },
     showAgentModal(agent) {
-      console.log("Opened modal");
       this.agent = agent; // Set the agent data
       this.showAgent = true; // Show the modal
     },
-    async verifyAgent() {
+
+    async verifyAgent(agent) {
       try {
-        // Check if token exists
-        if (!localStorage.getItem("token")) {
-          this.$router.push("/");
-          return;
-        }
-        
+        this.loading = true;
         const response = await axios.patch(
           `${API_URL}/user/verify-agent/${this.agent._id}`,
+          {},
           {
             headers: {
               token: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        this.agent.status = true;
-        
-        // this.hideAgentModal();
+        if (response.data.success) {
+          agent.isVerified = true;
+        }
+        // Reload the agents from database
+        alert("Agent verified successfully");
+        this.fetchAgents();
+        this.hideAgentModal();
       } catch (error) {
         console.error("Verify agent failed:", error.message);
       }
     },
 
-    async verifyAgent(agent) {
-      try {
-        const response = await axios.patch(
-          `${API_URL}/user/verify-agent/${agent._id}`,
-          {
-            headers: {
-              token: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        console.log(response.data)
-        if (response.data.success) {
-          agent.isVerified = true;
-        }
-      } catch (error) {
-        console.error("Verify agent failed:", error.message);
-      }
-    },
-    
     async fetchAgents() {
       try {
         // Check if token exists
@@ -162,7 +145,6 @@ export default {
         this.$nextTick(() => {
           $("#myTable").DataTable();
         });
-        this.loading = false;
       } catch (error) {
         console.error("Fetch agents failed:", error.message);
       }

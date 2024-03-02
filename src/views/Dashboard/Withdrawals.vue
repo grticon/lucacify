@@ -78,11 +78,14 @@ export default {
           this.$router.push("/");
           return;
         }
-        const response = await axios.get(`${API_URL}/user/get-withdrawal-requests`, {
-          headers: {
-            token: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          `${API_URL}/user/get-withdrawal-requests`,
+          {
+            headers: {
+              token: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         this.withdrawals = response.data.data.withdrawalRequests;
         this.loading = false;
         this.$nextTick(() => {
@@ -94,6 +97,7 @@ export default {
     },
     async approveWithdrawal(id) {
       try {
+        this.loading = true;
         const response = await axios.patch(
           `${API_URL}/user/approve-withdrawal-request/${id}`,
           {},
@@ -103,13 +107,15 @@ export default {
             },
           }
         );
-        alert(response.data.message)
+        this.loading = false;
+        alert(response.data.message);
       } catch (error) {
         console.error("Approve withdrawal failed:", error.message);
       }
     },
     async rejectWithdrawal(id) {
       try {
+        this.loading = true;
         const response = await axios.patch(
           `${API_URL}/user/reject-withdrawal-request/${id}`,
           {},
@@ -119,9 +125,8 @@ export default {
             },
           }
         );
-        if (response.data.success) {
-          this.fetchWithdrawals();
-        }
+        this.loading = false;
+        alert(response.data.message);
       } catch (error) {
         console.error("Reject withdrawal failed:", error.message);
       }
