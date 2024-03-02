@@ -29,6 +29,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { API_URL } from "../../config/config.js";
 import $ from "jquery";
+import Loader from "@/components/Loader.vue";
 
 
 export default {
@@ -67,9 +68,12 @@ export default {
           $("#myTable").DataTable();
         });
       } catch (error) {
-        console.error("Fetch users failed:", error);
+        console.error("Fetch users failed:", error.message);
       }
     },
+  },
+  components: {
+    Loader,
   },
 };
 </script>
