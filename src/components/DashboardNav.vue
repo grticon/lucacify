@@ -69,9 +69,14 @@ const links = ref([
     icon: "bi bi-cash-stack",
   },
   {
-    name: "Reports",
-    to: "/reports",
+    name: "Agent Reports",
+    to: "/agentreports",
     icon: "bi bi-flag-fill",
+  },
+  {
+    name: "Bug Reports",
+    to: "/bugreports",
+    icon: "bi bi-bug-fill",
   },
 ]);
 </script>

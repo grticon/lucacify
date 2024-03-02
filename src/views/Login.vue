@@ -47,6 +47,7 @@ export default {
   <main>
     <div class="form">
       <img src="@/assets/logo2.png" alt="" width="200px" />
+      <p class="greet">Welcome back! Admin</p>
       <form @submit.prevent="login">
         <div class="full">
           <label for="emailOrUsername">Email or Username</label>
@@ -83,8 +84,12 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    img {
+    img{
+      margin: 0px 0px 10px;
+    }
+    p.greet {
       margin: 0px 0px 30px;
+      font-size: 20px;
     }
 
     form {
@@ -120,6 +125,7 @@ main {
           color: #fff;
           font-size: 14px;
           letter-spacing: 2px;
+          cursor: pointer;
         }
       }
     }

@@ -6,7 +6,8 @@ import Agents from "@/views/Dashboard/Agents.vue";
 import ShopOrders from "@/views/Dashboard/ShopOrders.vue";
 import Orders from "@/views/Dashboard/Orders.vue";
 import Withdrawals from "@/views/Dashboard/Withdrawals.vue";
-import Reports from "@/views/Dashboard/Reports.vue";
+import AgentReports from "@/views/Dashboard/AgentReports.vue";
+import BugReports from "@/views/Dashboard/BugReports.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,9 +52,15 @@ const router = createRouter({
           meta: { requiresAuth: true },
         },
         {
-          path: "/reports",
-          name: "reports",
-          component: Reports,
+          path: "/agentreports",
+          name: "agentreports",
+          component: AgentReports,
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "/bugreports",
+          name: "bugreports",
+          component: BugReports,
           meta: { requiresAuth: true },
         },
       ],

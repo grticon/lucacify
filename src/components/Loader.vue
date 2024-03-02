@@ -24,6 +24,7 @@ main{
     justify-content: center;
     align-items: center;
     background-color: #0009;
+    backdrop-filter: blur(5px);
     z-index: 999;
 }
 section{

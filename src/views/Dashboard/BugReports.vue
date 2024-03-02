@@ -1,6 +1,6 @@
 <template>
     <main>
-      <h1>Reports - {{ Users.length }}</h1>
+      <h1>Bug Reports - {{ Users.length }}</h1>
       <section v-for="(user, index) in Users" :key="index">
         <div class="item" :for="index">
           <div class="tp">
@@ -8,6 +8,7 @@
             <div class="txt">
               <p class="bold">{{ user.name }}</p>
               <p class="light">{{ user.email }}</p>
+              <p class="light">{{ user.date }}</p>
             </div>
           </div>
           <p class="comment">
@@ -25,31 +26,37 @@
   {
       name: 'John Doe',
       email: 'User@email.com',
+      date: 'january 1, 2024',
       comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, laborum impedit dolores in voluptatibus explicabo deserunt fugiat debitis reprehenderit distinctio, suscipit, culpa cum odio. Inventore optio voluptatibus tenetur similique nobis?'
     },
     {
       name: 'Lara croft',
       email: 'User@email.com',
+      date: 'january 1, 2024',
       comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, laborum impedit dolores in voluptatibus explicabo deserunt fugiat debitis reprehenderit distinctio, suscipit, culpa cum odio. Inventore optio voluptatibus tenetur similique nobis?'
     },
     {
       name: 'Sarah Lee',
       email: 'User@email.com',
+      date: 'january 1, 2024',
       comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, laborum impedit dolores in voluptatibus explicabo deserunt fugiat debitis reprehenderit distinctio, suscipit, culpa cum odio. Inventore optio voluptatibus tenetur similique nobis?'
     },
     {
       name: 'John Doe',
       email: 'User@email.com',
+      date: 'january 1, 2024',
       comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, laborum impedit dolores in voluptatibus explicabo deserunt fugiat debitis reprehenderit distinctio, suscipit, culpa cum odio. Inventore optio voluptatibus tenetur similique nobis?'
     },
     {
       name: 'Lara croft',
       email: 'User@email.com',
+      date: 'january 1, 2024',
       comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, laborum impedit dolores in voluptatibus explicabo deserunt fugiat debitis reprehenderit distinctio, suscipit, culpa cum odio. Inventore optio voluptatibus tenetur similique nobis?'
     },
     {
       name: 'Sarah Lee',
       email: 'User@email.com',
+      date: 'january 1, 2024',
       comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, laborum impedit dolores in voluptatibus explicabo deserunt fugiat debitis reprehenderit distinctio, suscipit, culpa cum odio. Inventore optio voluptatibus tenetur similique nobis?'
     },
   ]);
