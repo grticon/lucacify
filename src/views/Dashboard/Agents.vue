@@ -13,6 +13,7 @@
               <td>Country</td>
               <td>Status</td>
               <td>Action</td>
+              <td>Ratings</td>
             </tr>
           </thead>
           <tbody>
@@ -38,8 +39,11 @@
               </td>
               <td>
                 <p v-if="agent.isBanned">Banned</p>
-                <button v-else @click="banAgent(agent)" class="btn btn-primary">Ban</button>
+                <button v-else @click="banAgent(agent)" class="btn btn-primary">
+                  Ban
+                </button>
               </td>
+              <td>{{ agent.ratingFromAdmin }}</td>
             </tr>
           </tbody>
         </table>
@@ -65,12 +69,28 @@
           <p class="txt">{{ agent.city }}, {{ agent.country }}</p>
           <h3>ID Verification</h3>
           <img src="@/assets/dp.jpg" alt="" />
+          <br />
           <div class="verify">
             <p class="stat" v-if="agent.isVerified">
               Verified <i class="bi bi-patch-check-fill"></i>
             </p>
             <button v-else @click="verifyAgent(agent)">Verify</button>
           </div>
+          <br />
+          <h3>Actions</h3>
+          <!-- Rate agent -->
+          <form @submit.prevent="submitRating(agent)">
+            <label for="rating">Rating:</label>
+            <input
+              type="number"
+              id="rating"
+              v-model="rating"
+              min="1"
+              max="5"
+              required
+            />
+            <button type="submit">Submit Rating</button>
+          </form>
         </div>
       </div>
     </div>
@@ -91,6 +111,7 @@ export default {
       loading: true,
       agent: {},
       agents: [],
+      rating: 1,
     };
   },
   mounted() {
@@ -179,6 +200,34 @@ export default {
         });
       } catch (error) {
         console.error("Fetch agents failed:", error.message);
+      }
+    },
+
+    async submitRating(agent) {
+      try {
+        this.loading = true;
+        const data = {
+          rating: this.rating,
+        };
+        const response = await axios.patch(
+          `${API_URL}/user/rate-agent-from-admin/${agent._id}`,
+          data,
+          {
+            headers: {
+              token: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+          alert("Rating submitted successfully");
+          this.hideAgentModal();
+          this.fetchAgents();
+
+        this.loading = false;
+      } catch (error) {
+        console.error("Submit rating failed:", error.message);
+        // Alert user
+        alert("Rating submission failed");
+        this.loading = false;
       }
     },
   },

@@ -6,9 +6,9 @@
           <div class="tp">
             <img src="@/assets/dp.jpg" alt="" />
             <div class="txt">
-              <p class="bold">@{{ report.user.username }}</p>
-              <p class="light">{{ report.user.email }}</p>
-              <p class="light">{{ report.user.createdAt }}</p>
+              <p class="bold">{{ report.agent.name }}</p>
+              <p class="light">{{ report.agent.email }}</p>
+              <p class="light">{{ report.agent.createdAt }}</p>
               <br />
               <p class="bold">User Reported - {{ report.user.name }}</p>
             </div>
