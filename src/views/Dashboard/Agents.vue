@@ -10,7 +10,9 @@
             <tr>
               <td>Name</td>
               <td>Email</td>
+              <td>Country</td>
               <td>Status</td>
+              <td>Action</td>
             </tr>
           </thead>
           <tbody>
@@ -21,6 +23,7 @@
             >
               <td>{{ agent.name }}</td>
               <td>{{ agent.user.email }}</td>
+              <td>{{ agent.country }}</td>
               <td>
                 <span class="status" v-if="agent.isVerified">
                   <i class="bi bi-patch-check-fill"></i> Verified
@@ -32,6 +35,10 @@
                 >
                   Verify
                 </button>
+              </td>
+              <td>
+                <p v-if="agent.isBanned">Banned</p>
+                <button v-else @click="banAgent(agent)" class="btn btn-primary">Ban</button>
               </td>
             </tr>
           </tbody>
@@ -108,7 +115,7 @@ export default {
       try {
         this.loading = true;
         const response = await axios.patch(
-          `${API_URL}/user/verify-agent/${this.agent._id}`,
+          `${API_URL}/user/verify-agent/${agent._id}`,
           {},
           {
             headers: {
@@ -125,6 +132,31 @@ export default {
         this.hideAgentModal();
       } catch (error) {
         console.error("Verify agent failed:", error.message);
+      }
+    },
+
+    async banAgent(agent) {
+      try {
+        this.loading = true;
+        const response = await axios.patch(
+          `${API_URL}/user/ban-agent/${agent._id}`,
+          {},
+          {
+            headers: {
+              token: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (response.data.success) {
+          agent.isBanned = true;
+        }
+        // Reload the agents from database
+        alert("Agent banned successfully");
+        this.loading = false;
+        this.hideAgentModal();
+        this.fetchAgents();
+      } catch (error) {
+        console.error("Ban agent failed:", error.message);
       }
     },
 
@@ -192,40 +224,7 @@ main {
 
   div.table {
     margin: 20px 0;
-
-    // table {
-    //   border-collapse: collapse;
-    //   border: 1px solid #ccc;
-    //   width: 100%;
-    //   max-width: 800px;
-    //   gap: 10px;
-    //   color: #555;
-
-    //   thead {
-    //     background-color: #fafaff;
-    //   }
-
-    //   td {
-    //     padding: 5px;
-    //     border-right: 1px solid #ccc;
-    //     border-bottom: 1px solid #ccc;
-    //     font-size: 14px;
-    //     cursor: pointer;
-    //     @media(max-width: 710px){
-    //       padding: 10px 5px;
-    //     }
-
-    //     button {
-    //       background-color: #2D2FE4;
-    //       color: #fff;
-    //       border: none;
-    //       height: 40px;
-    //       padding: 0px 20px;
-    //       border-radius: 8px;
-
-    //     }
-    //   }
-    // }
+    width: 100%;
   }
 
   div.modal {

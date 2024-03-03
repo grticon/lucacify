@@ -8,7 +8,7 @@
             <td>Name</td>
             <td>Username</td>
             <td>Email</td>
-            <td>Phone</td>
+            <td>Action</td>
           </tr>
         </thead>
         <tbody>
@@ -16,12 +16,18 @@
             <td>{{ user.name }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.phone }}</td>
+            <td>
+              <p v-if="user.isBanned">Banned</p>
+              <button v-else @click="banUser(user)" class="btn btn-primary">
+                Ban
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </main>
+  <Loader v-if="loading" />
 </template>
 
 <script>
@@ -31,15 +37,14 @@ import { API_URL } from "../../config/config.js";
 import $ from "jquery";
 import Loader from "@/components/Loader.vue";
 
-
 export default {
   data() {
     return {
+      loading: true,
       users: [],
     };
   },
   mounted() {
-    // Fetch users when the component is created
     this.fetchUsers();
   },
   methods: {
@@ -58,17 +63,49 @@ export default {
         // format users to return only name, email and phone number
         this.users = response.data.data.users.map((user) => {
           return {
+            _id: user._id,
             name: user.name,
             username: user.username,
             email: user.email,
             phone: user.phone,
+            isBanned: user.isBanned,
           };
         });
-        this.$nextTick(() => {
-          $("#myTable").DataTable();
-        });
+        this.loading = false;
+        // Check if datatable is already initialized. if it is, skip, if not, instanciate it
+        if ($.fn.DataTable.isDataTable("#myTable")) {
+        } else {
+          this.$nextTick(() => {
+            $("#myTable").DataTable({ responsive: true });
+          });
+        }
+
+        // this.$nextTick(() => {
+        //   $("#myTable").DataTable({ responsive: true });
+        // });
       } catch (error) {
         console.error("Fetch users failed:", error.message);
+      }
+    },
+    async banUser(user) {
+      try {
+        this.loading = true;
+        const response = await axios.patch(
+          `${API_URL}/user/ban-user/${user._id}`,
+          {},
+          {
+            headers: {
+              token: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (response.data.success) {
+          alert("User banned successfully");
+        }
+        this.loading = false;
+        this.fetchUsers();
+      } catch (error) {
+        console.error("Ban user failed:", error.message);
       }
     },
   },
