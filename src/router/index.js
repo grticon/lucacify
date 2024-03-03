@@ -7,6 +7,7 @@ import ShopOrders from "@/views/Dashboard/ShopOrders.vue";
 import Orders from "@/views/Dashboard/Orders.vue";
 import Withdrawals from "@/views/Dashboard/Withdrawals.vue";
 import AgentReports from "@/views/Dashboard/AgentReports.vue";
+import UserReports from "@/views/Dashboard/UserReports.vue";
 import BugReports from "@/views/Dashboard/BugReports.vue";
 
 const router = createRouter({
@@ -49,6 +50,12 @@ const router = createRouter({
           path: "/withdrawals",
           name: "withdrawals",
           component: Withdrawals,
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "/userreports",
+          name: "userreports",
+          component: UserReports,
           meta: { requiresAuth: true },
         },
         {
