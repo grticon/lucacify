@@ -27,7 +27,7 @@
               <td>{{ agent.country }}</td>
               <td>
                 <span class="status" v-if="agent.isVerified">
-                  <i class="bi bi-patch-check-fill"></i> Verified
+                  <i class="bi bi-patch-check-fill patch" ></i> Verified
                 </span>
                 <button
                   v-else
@@ -43,7 +43,7 @@
                   Ban
                 </button>
               </td>
-              <td>{{ agent.ratingFromAdmin }}</td>
+              <td>{{ agent.ratingFromAdmin }} Star</td>
             </tr>
           </tbody>
         </table>
@@ -111,7 +111,7 @@ export default {
       loading: true,
       agent: {},
       agents: [],
-      rating: 1,
+      rating: '',
     };
   },
   mounted() {

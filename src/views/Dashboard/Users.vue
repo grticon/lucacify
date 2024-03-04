@@ -153,4 +153,13 @@ main {
     // }
   }
 }
+table td button{
+  height: 48px;
+  padding: 0px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: blue;
+  color: #fff;
+  cursor: pointer;
+}
 </style>

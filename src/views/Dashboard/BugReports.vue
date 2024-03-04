@@ -80,6 +80,8 @@ main {
   }
   section {
     display: grid;
+        max-width: 800px;
+        margin: auto;
 
     div.item {
       padding: 20px;
